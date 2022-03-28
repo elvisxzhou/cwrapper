@@ -1,0 +1,54 @@
+{
+  "name": "libclang",
+  "url" : "https://raw.githubusercontent.com/llvm/llvm-project/llvmorg-14.0.0/clang/include/clang-c/",
+  "c2nimArgs":[
+      "--strict",
+      "--debug",
+      "--skipinclude",
+      "--importc",
+      "--cdecl",
+      "--concat"
+  ],
+  "filesToWrap" : [
+    "CXErrorCode.h",
+    "CXString.h",
+    "BuildSystem.h",
+    "CXCompilationDatabase.h",
+    "FatalErrorHandler.h",
+    "Index.h",
+    "Documentation.h",
+    "Rewrite.h"
+  ],
+  "c2nimStatementsAll":[
+    "#def CINDEX_DEPRECATED",
+    "#def CINDEX_LINKAGE",
+    "#def LLVM_CLANG_C_EXTERN_C_BEGIN",
+    "#def LLVM_CLANG_C_EXTERN_C_END",
+    "#assumendef __has_feature"
+  ],
+  "unifdefArgs":[],
+  "c2nimStatementsOnce" : [
+    "#if defined(windows)",
+    "#  define libclangLib \"libclang.dll\"",
+    "#else",
+    "#  define libclangLib \"libclang.so\"",
+    "#endif",
+    "#  dynlib libclangLib",
+    "#  cdecl",
+
+    "#@",
+    "from times import Time",
+    "type ",
+    "  CXVirtualFileOverlayImpl = object",
+    "  CXModuleMapDescriptorImpl = object",
+    "  CXTargetInfoImpl = object",
+    "  CXTranslationUnitImpl = object",
+    "  CXCursorSetImpl = object",
+    "@#"
+  ],
+  "symbolsToReplace": {
+    "CINDEX_VERSION_STRINGIZE_":"CINDEX_VERSION_STRINGIZE_I",
+    "time_t":"Time"
+  },
+  "prefixesToRemove":[]
+}
